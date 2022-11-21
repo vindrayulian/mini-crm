@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class Ceklevel
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function handle(Request $request, Closure $next, ...$levels)
+    {
+        if(in_array($request->user()->level,$levels)){
+            return $next($request);
+        }else{
+            return redirect('/diri');
+        }
+
+        // return redirect('/login')->with('sukses','Anda bukan Admin Silahkan Hubungi Admin');
+
+        
+    }
+    // public function delete($id){
+    //     $data = Pekerja::find($id);
+    //     $data->delete();
+    //     return redirect()->route('pegawai')->with('sukses','Data Berhasil Di Hapus');
+    // }
+}
